@@ -4,10 +4,10 @@ from datetime import datetime
 from django.utils import timezone
 from faker import Faker
 
-from django_seed.guessers import NameGuesser, FieldTypeGuesser
-from django_seed.seeder import Seeder
-from django_seed.exceptions import SeederException, SeederCommandError
-from django_seed import Seed
+from my_django_seed.guessers import NameGuesser, FieldTypeGuesser
+from my_django_seed.seeder import Seeder
+from my_django_seed.exceptions import SeederException, SeederCommandError
+from my_django_seed import Seed
 
 import random
 
@@ -257,11 +257,11 @@ class APISeedTestCase(TestCase):
 class SeedCommandTestCase(TestCase):
 
     def test_seed_command(self):
-        call_command('seed', 'django_seed', number=10)
+        call_command('seed', 'my_django_seed', number=10)
 
     def test_invalid_number_arg(self):
         try:
-            call_command('seed', 'django_seed', number='asdf')
+            call_command('seed', 'my_django_seed', number='asdf')
         except Exception as e:
             self.assertTrue(isinstance(e, SeederCommandError))
         pass

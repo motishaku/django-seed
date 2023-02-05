@@ -1,9 +1,9 @@
 
 from django.core.management.base import AppCommand
 from django.db.models import ForeignKey
-from django_seed import Seed
-from django_seed.exceptions import SeederCommandError
-from django_seed.toposort import toposort_flatten
+from my_django_seed import Seed
+from my_django_seed.exceptions import SeederCommandError
+from my_django_seed.toposort import toposort_flatten
 from optparse import make_option
 import django
 

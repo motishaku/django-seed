@@ -3,8 +3,8 @@ import random
 from django.db.models import ForeignKey, ManyToManyField, OneToOneField
 from django.db.models.fields import AutoField
 
-from django_seed.exceptions import SeederException
-from django_seed.guessers import NameGuesser, FieldTypeGuesser
+from my_django_seed.exceptions import SeederException
+from my_django_seed.guessers import NameGuesser, FieldTypeGuesser
 
 
 class ModelSeeder(object):
@@ -27,19 +27,29 @@ class ModelSeeder(object):
 
         return func
 
-    def guess_field_formatters(self, faker):
+    def guess_field_formatters(self, faker, formatters=None):
         """
         Gets the formatter methods for each field using the guessers
         or related object fields
         :param faker: Faker factory object
+        :param formatters: this is 'customFieldFormatters' - optional dict with field as key and
+        callable as value
+        :type formatters: dict or None
         """
-        formatters = {}
+        if not formatters:
+            formatters = {}
         name_guesser = NameGuesser(faker)
         field_type_guesser = FieldTypeGuesser(faker)
 
         for field in self.model._meta.fields:
 
             field_name = field.name
+
+            # If user provides dict with data in 'seeder.add_entity(Model, num, data)', no reason to guess format.
+            # Also user can provide field which is not covered in FieldTypeGuesser and 'raise AttributeError(field)'
+            # will not be raised.
+            if field_name in formatters:
+                continue
 
             if field.get_default(): 
                 formatters[field_name] = field.get_default()
@@ -121,9 +131,7 @@ class Seeder(object):
         if not isinstance(model, ModelSeeder):
             model = ModelSeeder(model)
 
-        model.field_formatters = model.guess_field_formatters(self.faker)
-        if customFieldFormatters:
-            model.field_formatters.update(customFieldFormatters)
+        model.field_formatters = model.guess_field_formatters(self.faker, formatters=customFieldFormatters)
 
         klass = model.model
         self.entities[klass] = model

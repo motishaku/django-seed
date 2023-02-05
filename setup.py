@@ -26,15 +26,14 @@ def find_version(*file_paths):
 
 
 setup(
-    name='django-seed',
+    name='my_django_seed',
     version=find_version('django_seed', '__init__.py'),
-    author='Tobin Brown',
-    author_email='tobin@brobin.me',
-    packages=['django_seed', 'django_seed.management', 'django_seed.management.commands'],
+    author='Moti shakuri',
+    author_email='motishaku@gmail.com',
+    packages=['my_django_seed', 'my_django_seed.management', 'my_django_seed.management.commands'],
     include_package_data=True,
-    url='http://github.com/brobin/django-seed',
     license='MIT',
-    description='Seed your Django project with fake data',
+    description='Seed your Django project with fake data, this is a fork of the original django_seed to support 2.7 with small changes.',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Information Technology',

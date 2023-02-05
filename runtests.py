@@ -17,13 +17,13 @@ def configure():
             }
         },
         INSTALLED_APPS=(
-            'django_seed',
+            'my_django_seed',
             'django_nose',
         ),
         TEST_RUNNER = 'django_nose.NoseTestSuiteRunner',
         NOSE_ARGS = [
             '--with-coverage',
-            '--cover-package=django_seed',
+            '--cover-package=my_django_seed',
         ],
         SITE_ID=1,
         SECRET_KEY=fake.sha1(),
@@ -38,7 +38,7 @@ def runtests():
     django.setup()
     TestRunner = get_runner(settings)
     test_runner = TestRunner(verbosity=1, interactive=True, failfast=False)
-    failures = test_runner.run_tests(['django_seed', ])
+    failures = test_runner.run_tests(['my_django_seed', ])
     sys.exit(failures)
 
 
